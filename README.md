@@ -1,6 +1,6 @@
 # mn-frydrych.de
 
-Strona Maksymiliana i Nikoliny. Leży na GitHub Pages — to znaczy, że
+Strona Nikoliny i Maksymiliana. Leży na GitHub Pages — to znaczy, że
 GitHub sam ją publikuje. Zapisujesz zmianę w plikach, mija minuta lub dwie
 i zmiana jest widoczna w internecie. Nie ma żadnego „wysyłania na serwer".
 
@@ -61,7 +61,7 @@ Otwórz `index.html`. Teksty stoją między znacznikami, np.:
 
 ```html
 <div class="data">10 • 09 • 2026</div>
-<div class="imiona">MAKSYMILIAN &amp; NIKOLINA</div>
+<div class="imiona">NIKOLINA &amp; MAKSYMILIAN</div>
 ```
 
 Zmieniasz to, co jest w środku. Reszty nie ruszasz.
