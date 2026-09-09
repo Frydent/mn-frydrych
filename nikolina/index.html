@@ -105,6 +105,8 @@ a.btn{display:flex;align-items:center;justify-content:center;min-height:52px;pad
   font-size:15px;letter-spacing:.16em;margin-right:-.16em;text-transform:uppercase;
   transition:background-color .2s ease, border-color .2s ease}
 a.cta{transition:filter .2s ease, box-shadow .2s ease;background:rgb(247,238,235);color:#7a3346;border-color:rgb(247,238,235);font-weight:600;letter-spacing:.2em;margin-right:-.2em}
+button.shr{margin-top:2px;background:none;border:0;padding:8px 0;cursor:pointer;font:inherit;font-size:12px;letter-spacing:.24em;margin-right:-.24em;text-transform:uppercase;color:rgba(247,238,235,.75);transition:color .2s ease}
+button.shr:hover{color:rgb(247,238,235)}
 .wh{margin-top:34px;width:100%;display:flex;align-items:center;gap:12px;
   font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:rgba(247,238,235,.75)}
 .wh i{flex:1;height:1px;background:rgba(247,238,235,.4);display:block}
@@ -148,13 +150,14 @@ a.cta:active{filter:brightness(.9)}
       <a class="btn" href="mailto:nikolina@mn-frydrych.de" data-t="mail"></a>
     </div>
     <a class="btn cta" id="vcf" href="nikolina-frydrych-de.vcf" data-t="save"></a>
+    <button type="button" class="shr" id="shr" data-t="share"></button>
   </div>
   <div class="wh"><i></i><span data-t="worlds"></span><i></i></div>
   <div class="worlds"><a class="world" href="https://mn-frydrych.de/" rel="noopener"><span data-t="wir" style="font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:inherit"></span><span>mn-frydrych.de</span></a><a class="world" href="https://frydent.de/" rel="noopener">FRYDENT<span>frydent.de</span></a><a class="world" href="/max/">MAX<span>mn-frydrych.de/max</span></a></div>
   <footer><a href="tel:+48577290916">+48 577 290 916</a> <span style="opacity:.7">(PL)</span><br><a href="mailto:nikolina@mn-frydrych.de">nikolina@mn-frydrych.de</a></footer>
 </div>
 <script>
-var D={"pl": {"h1": "Nikolina Frydrych", "vpre": "mgr", "role": "Menedżerka praktyki · FRYDENT, Bonndorf", "call": "Zadzwoń", "mail": "E-mail", "save": "Zapisz kontakt", "worlds": "Moje światy", "wir": "My dwoje", "title": "Menedżerka praktyki", "desc": "Telefon, e-mail i kontakt do zapisania w telefonie."}, "de": {"h1": "Nikolina Frydrych", "vpre": "mgr", "role": "Praxismanagerin · FRYDENT, Bonndorf", "call": "Anrufen", "mail": "E-Mail", "save": "Kontakt speichern", "worlds": "Meine Welten", "wir": "Wir zwei", "title": "Praxismanagerin", "desc": "Telefon, E-Mail und Kontakt zum Speichern."}, "en": {"h1": "Nikolina Frydrych", "vpre": "mgr", "role": "Practice Manager · FRYDENT, Bonndorf", "call": "Call", "mail": "Email", "save": "Save contact", "worlds": "My worlds", "wir": "The two of us", "title": "Practice Manager", "desc": "Phone, email and a contact card to save."}}, P={"first": "Nikolina", "last": "Frydrych", "org": "FRYDENT", "telraw": "+48577290916", "mail": "nikolina@mn-frydrych.de", "path": "/nikolina/", "prefix": "", "work": "+497703284", "adr": ";;Martinstr. 21;Bonndorf im Schwarzwald;;79848;Deutschland"};
+var D={"pl": {"h1": "Nikolina Frydrych", "vpre": "mgr", "role": "Menedżerka praktyki · FRYDENT, Bonndorf", "call": "Zadzwoń", "mail": "E-mail", "save": "Zapisz kontakt", "share": "Udostępnij kartę", "copied": "Skopiowano", "worlds": "Moje światy", "wir": "My dwoje", "title": "Menedżerka praktyki", "desc": "Telefon, e-mail i kontakt do zapisania w telefonie."}, "de": {"h1": "Nikolina Frydrych", "vpre": "mgr", "role": "Praxismanagerin · FRYDENT, Bonndorf", "call": "Anrufen", "mail": "E-Mail", "save": "Kontakt speichern", "share": "Karte teilen", "copied": "Kopiert", "worlds": "Meine Welten", "wir": "Wir zwei", "title": "Praxismanagerin", "desc": "Telefon, E-Mail und Kontakt zum Speichern."}, "en": {"h1": "Nikolina Frydrych", "vpre": "mgr", "role": "Practice Manager · FRYDENT, Bonndorf", "call": "Call", "mail": "Email", "save": "Save contact", "share": "Share card", "copied": "Copied", "worlds": "My worlds", "wir": "The two of us", "title": "Practice Manager", "desc": "Phone, email and a contact card to save."}}, P={"first": "Nikolina", "last": "Frydrych", "org": "FRYDENT", "telraw": "+48577290916", "mail": "nikolina@mn-frydrych.de", "path": "/nikolina/", "prefix": "", "work": "+497703284", "adr": ";;Martinstr. 21;Bonndorf im Schwarzwald;;79848;Deutschland"};
 function setLang(l,remember){
   var d=D[l];
   document.documentElement.lang=l;
@@ -176,5 +179,12 @@ function pick(){
 document.querySelectorAll(".lang button").forEach(function(b){
   b.addEventListener("click",function(){setLang(b.dataset.l,true)})});
 setLang(pick(),false);
+document.getElementById("shr").addEventListener("click",function(){
+  var b=this, l=document.documentElement.lang, u=location.origin+P.path;
+  function done(){b.textContent=D[l].copied; setTimeout(function(){b.textContent=D[l].share},2000)}
+  if(navigator.share){navigator.share({title:D[l].h1,url:u}).catch(function(){})}
+  else if(navigator.clipboard){navigator.clipboard.writeText(u).then(done,function(){})}
+  else{prompt(D[l].share,u)}
+});
 </script>
 </body></html>

@@ -105,6 +105,8 @@ a.btn{display:flex;align-items:center;justify-content:center;min-height:52px;pad
   font-size:15px;letter-spacing:.16em;margin-right:-.16em;text-transform:uppercase;
   transition:background-color .2s ease, border-color .2s ease}
 a.cta{transition:filter .2s ease, box-shadow .2s ease;background:rgb(224,226,229);color:#2d2a27;border-color:rgb(224,226,229);font-weight:600;letter-spacing:.2em;margin-right:-.2em}
+button.shr{margin-top:2px;background:none;border:0;padding:8px 0;cursor:pointer;font:inherit;font-size:12px;letter-spacing:.24em;margin-right:-.24em;text-transform:uppercase;color:rgba(224,226,229,.75);transition:color .2s ease}
+button.shr:hover{color:rgb(224,226,229)}
 .wh{margin-top:34px;width:100%;display:flex;align-items:center;gap:12px;
   font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:rgba(224,226,229,.75)}
 .wh i{flex:1;height:1px;background:rgba(224,226,229,.4);display:block}
@@ -148,13 +150,14 @@ a.cta:active{filter:brightness(.9)}
       <a class="btn" href="mailto:max@mn-frydrych.de" data-t="mail"></a>
     </div>
     <a class="btn cta" id="vcf" href="maksymilian-frydrych-de.vcf" data-t="save"></a>
+    <button type="button" class="shr" id="shr" data-t="share"></button>
   </div>
   <div class="wh"><i></i><span data-t="worlds"></span><i></i></div>
   <div class="worlds"><a class="world" href="https://mn-frydrych.de/" rel="noopener"><span data-t="wir" style="font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:inherit"></span><span>mn-frydrych.de</span></a><a class="world" href="https://frydent.de/" rel="noopener">FRYDENT<span>frydent.de</span></a><a class="world" href="/nikolina/">NIKOLINA<span>mn-frydrych.de/nikolina</span></a></div>
   <footer><a href="tel:+48668779022">+48 668 779 022</a> <span style="opacity:.7">(PL)</span><br><a href="mailto:max@mn-frydrych.de">max@mn-frydrych.de</a></footer>
 </div>
 <script>
-var D={"pl": {"h1": "Maksymilian Frydrych", "vpre": "MDDr.", "role": "Lekarz dentysta · FRYDENT, Bonndorf", "call": "Zadzwoń", "mail": "E-mail", "save": "Zapisz kontakt", "worlds": "Moje światy", "wir": "My dwoje", "title": "Lekarz dentysta", "desc": "Telefon, e-mail i kontakt do zapisania w telefonie."}, "de": {"h1": "Maksymilian Frydrych", "vpre": "MDDr.", "role": "Zahnarzt · FRYDENT, Bonndorf", "call": "Anrufen", "mail": "E-Mail", "save": "Kontakt speichern", "worlds": "Meine Welten", "wir": "Wir zwei", "title": "Zahnarzt", "desc": "Telefon, E-Mail und Kontakt zum Speichern."}, "en": {"h1": "Maksymilian Frydrych", "vpre": "MDDr.", "role": "Dentist · FRYDENT, Bonndorf", "call": "Call", "mail": "Email", "save": "Save contact", "worlds": "My worlds", "wir": "The two of us", "title": "Dentist", "desc": "Phone, email and a contact card to save."}}, P={"first": "Maksymilian", "last": "Frydrych", "org": "FRYDENT", "telraw": "+48668779022", "mail": "max@mn-frydrych.de", "path": "/max/", "prefix": "", "work": "+497703284", "adr": ";;Martinstr. 21;Bonndorf im Schwarzwald;;79848;Deutschland"};
+var D={"pl": {"h1": "Maksymilian Frydrych", "vpre": "MDDr.", "role": "Lekarz dentysta · FRYDENT, Bonndorf", "call": "Zadzwoń", "mail": "E-mail", "save": "Zapisz kontakt", "share": "Udostępnij kartę", "copied": "Skopiowano", "worlds": "Moje światy", "wir": "My dwoje", "title": "Lekarz dentysta", "desc": "Telefon, e-mail i kontakt do zapisania w telefonie."}, "de": {"h1": "Maksymilian Frydrych", "vpre": "MDDr.", "role": "Zahnarzt · FRYDENT, Bonndorf", "call": "Anrufen", "mail": "E-Mail", "save": "Kontakt speichern", "share": "Karte teilen", "copied": "Kopiert", "worlds": "Meine Welten", "wir": "Wir zwei", "title": "Zahnarzt", "desc": "Telefon, E-Mail und Kontakt zum Speichern."}, "en": {"h1": "Maksymilian Frydrych", "vpre": "MDDr.", "role": "Dentist · FRYDENT, Bonndorf", "call": "Call", "mail": "Email", "save": "Save contact", "share": "Share card", "copied": "Copied", "worlds": "My worlds", "wir": "The two of us", "title": "Dentist", "desc": "Phone, email and a contact card to save."}}, P={"first": "Maksymilian", "last": "Frydrych", "org": "FRYDENT", "telraw": "+48668779022", "mail": "max@mn-frydrych.de", "path": "/max/", "prefix": "", "work": "+497703284", "adr": ";;Martinstr. 21;Bonndorf im Schwarzwald;;79848;Deutschland"};
 function setLang(l,remember){
   var d=D[l];
   document.documentElement.lang=l;
@@ -176,5 +179,12 @@ function pick(){
 document.querySelectorAll(".lang button").forEach(function(b){
   b.addEventListener("click",function(){setLang(b.dataset.l,true)})});
 setLang(pick(),false);
+document.getElementById("shr").addEventListener("click",function(){
+  var b=this, l=document.documentElement.lang, u=location.origin+P.path;
+  function done(){b.textContent=D[l].copied; setTimeout(function(){b.textContent=D[l].share},2000)}
+  if(navigator.share){navigator.share({title:D[l].h1,url:u}).catch(function(){})}
+  else if(navigator.clipboard){navigator.clipboard.writeText(u).then(done,function(){})}
+  else{prompt(D[l].share,u)}
+});
 </script>
 </body></html>
